@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>カテゴリー管理</h1>
+<ul>
+    {% for category in categories %}
+        <li>{{ category.name }}</li>
+    {% endfor %}
+</ul>
+<form method="post">
+    <input type="text" name="name" placeholder="新しいカテゴリー名">
+    <button type="submit">追加</button>
+</form>
+<a href="{{ url_for('index') }}">戻る</a>
+{% endblock %}

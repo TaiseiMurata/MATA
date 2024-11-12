@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}新規登録{% endblock %}
+{% block content %}
+<h1>新規登録</h1>
+<form method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="名前" required><br>
+    <input type="password" name="password" placeholder="パスワード" required><br>
+    <label for="icon">アイコン画像を選択（任意）:</label><br>
+    <input type="file" name="icon" accept="image/*"><br><br>
+    <button type="submit">登録</button>
+</form>
+<p>既にアカウントをお持ちですか？ <a href="{{ url_for('login') }}">ログイン</a></p>
+{% endblock %}

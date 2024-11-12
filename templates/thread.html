@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ thread.title }}</h1>
+
+<ul id="messages">
+    {% for message in messages %}
+        <li>
+            <img src="{{ message.user_icon if message.user_icon else '/static/images/default_icon.png' }}" alt="アイコン" class="message-icon">
+            <strong>{{ message.user_name }}</strong>:
+            <span class="message-text">{{ message.message }}</span>
+            <em class="timestamp">({{ message.timestamp }})</em>
+        </li>
+    {% endfor %}
+</ul>
+
+<!-- メッセージ入力エリア -->
+<input id="messageInput" type="text" placeholder="メッセージを入力" onkeypress="if(event.key === 'Enter') sendMessage()">
+<button onclick="sendMessage()">送信</button>
+
+<!-- スレッド一覧に戻るリンク -->
+<div class="back-link">
+    <a href="{{ url_for('threads', category_id=thread.category_id) }}" class="back-button">スレッド一覧に戻る</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+<script>
+    // サーバーに接続
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // スレッドIDをJavaScript変数に格納
+    var threadId = "{{ thread.id }}";
+
+    // スレッドルームに参加
+    socket.on('connect', function() {
+        socket.emit('join_room', { 'thread_id': threadId });
+    });
+
+    // メッセージをサーバーに送信
+    function sendMessage() {
+        var message = document.getElementById('messageInput').value;
+        if (message) {
+            socket.emit('send_message', { message: message, thread_id: threadId });
+            document.getElementById('messageInput').value = ''; // 入力欄を空にする
+        }
+    }
+
+    // サーバーから新しいメッセージを受信
+    socket.on('new_message', function(data) {
+        var li = document.createElement('li');
+        
+        // アイコン画像を追加
+        var img = document.createElement('img');
+        img.src = data.icon ? data.icon : '/static/images/default_icon.png';
+        img.alt = 'アイコン';
+        img.className = 'message-icon';
+        li.appendChild(img);
+        
+        // ユーザー名とメッセージ
+        var strong = document.createElement('strong');
+        strong.textContent = data.name;
+        li.appendChild(strong);
+        
+        var text = document.createTextNode(': ' + data.message + ' ');
+        li.appendChild(text);
+        
+        var em = document.createElement('em');
+        em.className = 'timestamp';
+        em.textContent = '(' + data.timestamp + ')';
+        li.appendChild(em);
+        
+        document.getElementById('messages').appendChild(li);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,123 @@
+/* 基本設定 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f2f5f9; /* 淡い青みのグレー */
+    color: #444;
+    background-image: url('/static/images/baby_honyubin.png'); /* 画像のパス */
+    background-size: 200px 200px; /* 幅200px、高さ200pxに固定 */
+    background-position: top right; /* 右上に配置 */
+    background-repeat: no-repeat; /* 画像が繰り返し表示されないように */
+}
+
+/* 見出しのスタイル */
+h1 {
+    color: #6c92b6;  /* 落ち着いたブルー */
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 入力フィールドとボタンのスタイル */
+input[type="text"], input[type="password"], input[type="file"] {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #b0c4de;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    color: #444;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #6c92b6;  /* 落ち着いたブルー */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #5b7da0;
+}
+
+/* メッセージリストのスタイル */
+#messages {
+    list-style-type: none;
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #d1dbe8;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding-left: 0; /* パディングをリセット */
+}
+
+/* 各メッセージのスタイル */
+#messages li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #eaf0f6;  /* 柔らかい青 */
+    border-radius: 5px;
+    border-left: 4px solid #6c92b6;  /* ブルーのアクセント */
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* メッセージアイコンのスタイル */
+.message-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 2px solid #6c92b6;
+}
+
+/* メッセージテキストのスタイル */
+.message-text {
+    font-size: 1.1em;
+    color: #444;
+}
+
+.timestamp {
+    font-size: 0.75em;
+    color: #888;
+    margin-left: 10px;
+}
+
+.logout-link {
+    position: absolute;
+    top: 10px;
+    left: 10px; /* 右から左に変更 */
+    color: #ffffff;
+    background-color: #6c92b6;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.logout-link:hover {
+    background-color: #5b7da0;
+}
+
+/* その他のスタイル */
+.back-link, .back-button, .chatbot-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #6c92b6;
+    text-decoration: none;
+}
+
+.back-button:hover, .chatbot-link:hover {
+    text-decoration: underline;
+}

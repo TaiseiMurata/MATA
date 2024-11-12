@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ category.name }}のスレッド</h1>
+
+<!-- スレッド一覧表示 -->
+<ul>
+    {% for thread in threads %}
+        <li><a href="{{ url_for('thread', thread_id=thread.id) }}">{{ thread.title }}</a></li>
+    {% endfor %}
+</ul>
+
+<!-- 新しいスレッド作成フォーム -->
+<form method="post">
+    <input type="text" name="title" placeholder="新しいスレッド名">
+    <button type="submit">スレッド作成</button>
+</form>
+
+<!-- カテゴリー一覧に戻るリンク -->
+<a href="{{ url_for('index') }}" class="back-button">カテゴリー一覧に戻る</a>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>ChatGPTお悩み相談</h1>
+<div id="chatbox">
+    <div id="messages"></div>
+    <input type="text" id="userMessage" placeholder="メッセージを入力...">
+    <button onclick="sendMessage()">送信</button>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    const promptText = "このチャットではChatGPTがお手伝いします。質問を入力してください。";
+
+    // メッセージを表示するための関数
+    function displayMessage(message, name, timestamp) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = `${name}: ${message} (${timestamp})`;
+        document.getElementById('messages').appendChild(messageElement);
+    }
+
+    socket.on('bot_response', function(data) {
+        displayMessage(data.message, data.name, data.timestamp);
+    });
+    
+    function sendMessage() {
+        const message = document.getElementById('userMessage').value;
+        // ユーザーが送信したメッセージも表示
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        displayMessage(message, 'あなた', timestamp);
+        socket.emit('send_bot_message', { message: message });
+        document.getElementById('userMessage').value = '';
+    }
+</script>
+<a href="{{ url_for('index') }}">戻る</a>
+{% endblock %}
